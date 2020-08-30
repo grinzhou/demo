@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // 引入router
 // import router from '../../router';
 
@@ -11,6 +12,8 @@ import '../../assets/css/rest.css'
 import '../../assets/css/main.css'
 import './style.css'
 
+import { petalImages } from './petal'
+
 // 导出类
 export default class {
   mount(container) {
@@ -21,14 +24,11 @@ export default class {
       modal.show()
     })
 
-
-
     $(window, document).on('scroll', throttle(onWindowScroll, 600))
   }
 }
 
 const setActivePage = (activePageIndex = 1) => {
-  // const docHeight = pageHeight * $('.page-section').length
   const pageHeight = $('.page-section').innerHeight()
 
   $('html,body').animate(
@@ -48,7 +48,11 @@ const setActivePage = (activePageIndex = 1) => {
       break
 
     case 2:
-      $('.page1 .illustration').children().addClass('stop')
+      petalAnimation()
+
+      $('.page1 .illustration')
+        .children()
+        .addClass('stop')
       $('.page1 .content-box').addClass('stop')
       break
 
@@ -66,45 +70,12 @@ const onWindowScroll = () => {
     beforeScrollTop === windowScollTop
       ? false
       : beforeScrollTop > windowScollTop ? 'up' : 'down'
-  // const step = windowScollTop - beforeScrollTop
 
   if (windowScollTop === pageHeight) {
-    // $('.page1 .content-box').css({
-    //   left: '10%',
-    //   opacity: 1
-    // })
-
-    // $('.page1 .girl').css({
-    //   left: '30%',
-    //   opacity: 1
-    // })
-
-    $('.page1 .illustration').children().addClass('stop')
-    $('.page1 .content-box').addClass('stop')
+    setActivePage(2)
   }
 
-  // const item_1_offset = Math.abs($('.page1 .content-box').offset().left)
-  // const item_2_offset = Math.abs($('.page1 .girl').offset().left)
-
   if (delta === 'down') {
-    // if (windowScollTop > pageHeight * 0.3 && windowScollTop < pageHeight) {
-    //   $('.page1 .content-box').css(
-    //     {
-    //       left: item_1_offset < 200 ? item_1_offset + step * 0.5 : '10%',
-    //       opacity: windowScollTop * 0.05
-    //     },
-    //     100
-    //   )
-
-    //   $('.page1 .girl').css(
-    //     {
-    //       left: item_2_offset > 500 ? item_2_offset - step * 0.5 : '30%',
-    //       opacity: windowScollTop * 0.05
-    //     },
-    //     100
-    //   )
-    // }
-
     if (
       windowScollTop > pageHeight * 0.5 &&
       windowScollTop < pageHeight * 1.1 &&
@@ -119,27 +90,6 @@ const onWindowScroll = () => {
       setActivePage(3)
     }
   } else if (delta === 'up') {
-    // if (
-    //   windowScollTop < pageHeight * 0.5 &&
-    //   windowScollTop > pageHeight * 1.25
-    // ) {
-    //   $('.page1 .content-box').css(
-    //     {
-    //       left: 0,
-    //       opacity: 0
-    //     },
-    //     100
-    //   )
-
-    //   $('.page1 .girl').css(
-    //     {
-    //       left: '50%',
-    //       opacity: 0
-    //     },
-    //     100
-    //   )
-    // }
-
     if (windowScollTop < pageHeight * 0.75) {
       setActivePage(1)
     } else if (
@@ -152,4 +102,72 @@ const onWindowScroll = () => {
   }
 
   beforeScrollTop = $(window).scrollTop()
+}
+
+let aniTimer = null
+const petalAnimation = () => {
+  const snowflakeURl = Object.keys(petalImages).map(key => petalImages[key])
+  const container = $('.page1 .container')
+  const visualWidth = container.width()
+  const visualHeight = container.height()
+
+  function animateCreator() {
+    const $stage = $('#page1Stage')
+
+    function getImagesName() {
+      return snowflakeURl[[Math.floor(Math.random() * 11)]]
+    }
+
+    function createSnowBox() {
+      const url = getImagesName()
+      return $('<span />')
+        .css({
+          display: 'block',
+          width: 42,
+          height: 42,
+          position: 'absolute',
+          zIndex: 9,
+          top: '-50px',
+          backgroundSize: '100%',
+          backgroundRepeat: 'no-repeat',
+          backgroundImage: 'url(' + url + ')'
+        })
+        .addClass('snowRoll')
+    }
+    // 开始飘花
+    aniTimer = setInterval(() => {
+      // 运动的轨迹
+      const startPositionLeft = Math.random() * visualWidth - 100,
+        startOpacity = 1,
+        endPositionTop = visualHeight + 50,
+        endPositionLeft = startPositionLeft - 100 + Math.random() * 500,
+        duration = visualHeight * 10 + Math.random() * 500
+
+      // 随机透明度，不小于0.5
+      let randomStart = Math.random()
+      randomStart = randomStart < 0.5 ? startOpacity : randomStart
+      // 创建一个雪花
+      const $flake = createSnowBox()
+      // 设计起点位置
+      $flake.css({
+        left: startPositionLeft,
+        opacity: randomStart
+      })
+      // 加入到容器
+      $stage.append($flake)
+      // 开始执行动画
+      $flake.animate(
+        {
+          top: endPositionTop,
+          left: endPositionLeft
+        },
+        parseInt(duration),
+        () => {
+          $(this).remove()
+        }
+      )
+    }, 300)
+  }
+
+  animateCreator()
 }
