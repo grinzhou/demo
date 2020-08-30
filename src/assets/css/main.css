@@ -3,6 +3,10 @@ body {
 	max-width: 1980px;
 }
 
+body.hidden-scroll {
+	overflow: hidden;
+}
+
 #root {
 	position: relative;
 	width: 100vw;
@@ -15,6 +19,7 @@ body {
 	width: 100vw;
 	height: calc(100vh - 120px);
 	overflow: hidden;
+	background-attachment: fixed !important;
 }
 
 .page-section:last-of-type {

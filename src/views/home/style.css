@@ -100,12 +100,16 @@
     position: absolute;
     z-index: 2;
     top: 10%;
+    left: -50%;
     width: 467px;
     height: 592px;
     background: url('./img/page1_mock_content.jpg') no-repeat center;
+    opacity: 0;
+    transition-duration: 600ms;
 }
 .page1 .content-box.stop {
     left: 10%;
+    opacity: 1;
 }
 
 .page1 .illustration {
@@ -124,15 +128,16 @@
 .page1 .illustration .girl {
     z-index: 2;
     top: 0;
-    right: -2%;
+    left: 50%;
     width: 1098px;
     height: 1017px;
     background: url('./img/page1_girl.png') no-repeat center;
     opacity: 0;
     transition-duration: 600ms;
+    transition-delay: 600ms;
 }
 .page1 .illustration .girl.stop {
-    right: 8%;
+    left: 30%;
     opacity: 1;
 }
 
@@ -145,8 +150,8 @@
     background: url('./img/page1_umbrella_l.png') no-repeat center;
     opacity: 0;
     transform: rotate(-45deg);
-    transition-duration: 300ms;
-    transition-delay: 500ms;
+    transition-duration: 600ms;
+    transition-delay: 1200ms;
 }
 .page1 .illustration .umbrella_l.stop {
     left: 36%;
@@ -163,13 +168,24 @@
     background: url('./img/page1_umbrella_r.png') no-repeat center;
     opacity: 0;
     transform: rotate(45deg);
-    transition-duration: 350ms;
-    transition-delay: 1200ms;
+    transition-duration: 450ms;
+    transition-delay: 1600ms;
 }
 .page1 .illustration .umbrella_r.stop {
     right: 0;
     opacity: 1;
     transform: rotate(0deg);
+}
+
+.page1 .stage {
+    position: relative;
+    width: 100vw;
+    height: calc(100vh - 120px);
+}
+
+.page1 .stage > span {
+    display: block;
+
 }
 
 
