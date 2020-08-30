@@ -42,13 +42,22 @@ const setActivePage = (activePageIndex = 1) => {
     }
   )
 
+  const destoryPage1Ani = () => {
+    $('.page1 .stop').removeClass('stop')
+    if (aniTimer !== null) {
+      clearInterval(aniTimer)
+      aniTimer = null
+      $('.page1 #page1Stage .petal-obj').remove()
+    }
+  }
+
   switch (activePageIndex) {
     case 1:
-      $('.page1 .stop').removeClass('stop')
+      destoryPage1Ani()
       break
 
     case 2:
-      petalAnimation()
+      if (aniTimer === null) petalAnimation()
 
       $('.page1 .illustration')
         .children()
@@ -57,7 +66,7 @@ const setActivePage = (activePageIndex = 1) => {
       break
 
     case 3:
-      $('.page1 .stop').removeClass('stop')
+      destoryPage1Ani()
       break
   }
 }
@@ -120,26 +129,28 @@ const petalAnimation = () => {
 
     function createSnowBox() {
       const url = getImagesName()
-      return $('<span />')
+      const sign = parseInt(Math.random() * 100) % 2 === 1
+
+      return $('<span class="petal-obj" />')
         .css({
           display: 'block',
           width: 42,
           height: 42,
           position: 'absolute',
-          zIndex: 9,
+          zIndex: sign ? 6 : 4,
           top: '-50px',
           backgroundSize: '100%',
           backgroundRepeat: 'no-repeat',
           backgroundImage: 'url(' + url + ')'
         })
-        .addClass('snowRoll')
+        .addClass('rolling')
     }
     // 开始飘花
     aniTimer = setInterval(() => {
       // 运动的轨迹
       const startPositionLeft = Math.random() * visualWidth - 100,
         startOpacity = 1,
-        endPositionTop = visualHeight + 50,
+        endPositionTop = visualHeight + 100,
         endPositionLeft = startPositionLeft - 100 + Math.random() * 500,
         duration = visualHeight * 10 + Math.random() * 500
 
@@ -161,12 +172,12 @@ const petalAnimation = () => {
           top: endPositionTop,
           left: endPositionLeft
         },
-        parseInt(duration),
+        parseInt(duration * 0.8),
         () => {
           $(this).remove()
         }
       )
-    }, 300)
+    }, 250)
   }
 
   animateCreator()

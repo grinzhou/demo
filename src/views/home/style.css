@@ -125,7 +125,7 @@
 }
 
 .page1 .illustration .girl {
-	z-index: 2;
+	z-index: 6;
 	top: 0;
 	left: 50%;
 	width: 1098px;
@@ -141,7 +141,7 @@
 }
 
 .page1 .illustration .umbrella_l {
-	z-index: 1;
+	z-index: 3;
 	width: 521px;
 	height: 516px;
 	top: 20px;
@@ -159,7 +159,7 @@
 }
 
 .page1 .illustration .umbrella_r {
-	z-index: 1;
+	z-index: 2;
 	width: 587px;
 	height: 601px;
 	bottom: -220px;
@@ -176,45 +176,25 @@
 	transform: rotate(0deg);
 }
 
-.page1 .stage {
-	position: relative;
-	width: 100vw;
-	height: 100vh;
-	overflow: hidden;
-}
-
-.page1 .stage .itembox {
-	/* position: absolute;
-	z-index: 9;
-	width: 30px;
-	height: 30px;
-	top: 0;
-	background-repeat: no-repeat;
-	background-size: 100%; */
-}
-
-/* .page1 .stage .snowRoll {
-	opacity: 0;
-	animation-name: mysnow;
-	transition-duration: 6s;
-} */
-
-.snowRoll {
+.page1 .rolling {
 	position: absolute;
 	opacity: 0;
 	animation-name: spin1;
-	animation-duration: 16s;
+	animation-duration: 10s;
 }
 
 @keyframes spin1 {
 	0% {
 		transform: rotate(0deg) translate3d(0, 0, 0);
 	}
-	75% {
-		transform: rotate(270deg) translate3d(60px, 60px, 60px);
+	25% {
+		transform: rotate(180deg) translate3d(30px, 60px, 60px) scale3d(0.9, 0.9, 0.9);
+	}
+	50% {
+		transform: rotate(270deg) translate3d(60px, 120px, 120px) scale3d(0.8, 0.8, 0.8);
 	}
 	100% {
-		transform: rotate(270deg) translate3d(30px, 30px, 30px);
+		transform: rotate(360deg) translate3d(30px, 30px, 30px) scale3d(0.9, 0.9, 0.9);
 	}
 }
 
